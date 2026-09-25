@@ -43,7 +43,7 @@ SELECT id, time, mag, depth,
 FROM quakes
 WINDOW w24 AS (ORDER BY time RANGE BETWEEN INTERVAL '24' HOURS PRECEDING AND CURRENT ROW),
        w7d AS (ORDER BY time RANGE BETWEEN INTERVAL  '7' DAYS  PRECEDING AND CURRENT ROW)
-ORDER BY n_events_prev_24h DESC
+ORDER BY n_events_prev_24h DESC, time
 LIMIT 20;
 
 -- ======================================================================
@@ -73,7 +73,7 @@ FROM link      l
 INNER JOIN ncei   n ON n.id = l.ncei_id
 INNER JOIN quakes q ON q.id = l.usgs_id
 WHERE n.deathsTotal IS NOT NULL OR n.damageMillionsDollars IS NOT NULL
-ORDER BY n.deathsTotal DESC NULLS LAST
+ORDER BY n.deathsTotal DESC NULLS LAST, n.ts
 LIMIT 15;
 
 -- ======================================================================
@@ -84,14 +84,14 @@ FROM (SELECT CAST(FLOOR(YEAR(time)/10)*10 AS INTEGER) AS decade, place, mag, dep
              RANK() OVER (PARTITION BY FLOOR(YEAR(time)/10) ORDER BY mag DESC) AS rank
       FROM quakes)
 WHERE rank <= 3
-ORDER BY decade, rank;
+ORDER BY decade, rank, time;
 
 -- ======================================================================
 -- Q7_strongest_overall
 -- ======================================================================
 SELECT CAST(time AS DATE) AS date, place AS location, mag, ROUND(depth,1) AS depth_km, magType AS mag_scale
 FROM quakes
-ORDER BY mag DESC
+ORDER BY mag DESC, time
 LIMIT 10;
 
 -- ======================================================================
@@ -121,6 +121,6 @@ FROM (SELECT time, place, mag,
              LAG(mag)   OVER (ORDER BY time) AS prev_mag
       FROM quakes WHERE mag >= 6.0)
 WHERE prev_time IS NOT NULL AND next_time IS NOT NULL
-ORDER BY hours_since_prev
+ORDER BY hours_since_prev, time
 LIMIT 15;
 

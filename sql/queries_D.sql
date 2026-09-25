@@ -30,7 +30,7 @@ INNER JOIN ncei_ts t ON t.id = e.tsunamiEventId
 LEFT  JOIN ncei_ru r ON r.tsunamiEventId = t.id
 GROUP BY e.locationName, e.year, e.eqMagnitude, e.deathsTotal, t.maxWaterHeight, t.numRunups
 HAVING COUNT(r.id) > 0
-ORDER BY max_runup_m DESC
+ORDER BY max_runup_m DESC, year, earthquake
 LIMIT 15;
 
 -- ======================================================================
@@ -63,6 +63,6 @@ SELECT m.place                      AS location_usgs,
 FROM usgs_ms m
 INNER JOIN link l ON l.usgs_id = m.id
 INNER JOIN ncei_eq e ON e.id = l.ncei_id
-ORDER BY e.deathsTotal DESC NULLS LAST
+ORDER BY e.deathsTotal DESC NULLS LAST, m.time
 LIMIT 15;
 
