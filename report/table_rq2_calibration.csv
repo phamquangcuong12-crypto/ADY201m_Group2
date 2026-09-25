@@ -1,0 +1,9 @@
+mo_hinh,cach,xs_tb_du_bao,ty_le_that,Brier,AUC_test
+Random Forest (mag+depth),"train <= 2015, khong hieu chinh",0.355,0.385,0.1611,0.8454
+Random Forest (mag+depth),"train < 2006, khong hieu chinh",0.348,0.385,0.1564,0.8447
+Random Forest (mag+depth),train < 2006 + Platt (2006-2015),0.386,0.385,0.1548,0.8447
+Random Forest (mag+depth),train < 2006 + Isotonic (2006-2015),0.38,0.385,0.1634,0.8461
+Omori mo rong (mag+depth),"train <= 2015, khong hieu chinh",0.78,0.385,0.3803,0.8402
+Omori mo rong (mag+depth),"train < 2006, khong hieu chinh",0.5,0.385,0.18,0.8311
+Omori mo rong (mag+depth),train < 2006 + Platt (2006-2015),0.373,0.385,0.1706,0.8311
+Omori mo rong (mag+depth),train < 2006 + Isotonic (2006-2015),0.395,0.385,0.1602,0.8248
