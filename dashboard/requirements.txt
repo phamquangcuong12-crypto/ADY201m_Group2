@@ -1,0 +1,5 @@
+# Analysis tool (Gradio dashboard) - ADY201m Group 2
+# Install: pip install -r requirements.txt -r dashboard/requirements.txt
+# Run from the repo root: python dashboard/app.py
+gradio>=4.44
+plotly>=5.20
