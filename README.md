@@ -48,7 +48,7 @@ Chạy theo thứ tự **A → B → C → D**. B/C/D kiểm SHA-256 của file 
 - Catalog sạch: 16.687 trận từ `Mc = 4.6`; hệ số Gutenberg–Richter `b = 1.02`
 - Gardner–Knopoff tách được 62,3% là dư chấn → **853 chuỗi trận chính M ≥ 5.5**
 - Nhãn: 34,5% chuỗi có ≥1 dư chấn trong 24h / 100 km
-- Ghép hai nguồn: **97,3%** (108/111), lệch thời gian trung vị **28 giây**
+- Ghép hai nguồn: **97,3%** (108/111), lệch thời gian trung vị **0 giây** (tối đa 2 giây)
 - Chuỗi ghép ba tầng NCEI: **6.871 dòng**, 7.601 điểm runup, cao nhất **55,88 m**
 
 ### Kết quả RQ2
