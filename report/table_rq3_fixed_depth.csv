@@ -1,0 +1,3 @@
+kich_ban,so_chuoi,pct_duong,n_train,n_test,AUC_test,AUC_train,khoang_cach,AUC_omori_mo_rong,spearman_do_sau
+giu nguyen,853,34.5,627,226,0.8454,0.8809,0.0355,0.8402,-0.492
+BO do sau mac dinh,695,30.2,501,194,0.8544,0.909,0.0546,0.8473,-0.506

@@ -5,4 +5,5 @@ phep_kiem,ket_qua,ket_luan
 4. Bo nam 2011 (Tohoku),AUC doi +0.001,BEN - khong phu thuoc Tohoku
 5. Chia theo vung dia ly,AUC trung binh 0.821 (so voi 0.845 chia theo thoi gian),BEN
 6. Doi tham so tach cum,bien thien AUC 0.020,BEN
-7. ML co hon mo hinh vat ly 2 bien khong,ML 0.846 vs Omori mo rong 0.840 (+0.005),ML KHONG dong gop dang ke ngoai viec chon bien
+7. Bo do sau mac dinh (10/33/35 km),AUC doi +0.009 (695 chuoi),BEN - khong phu thuoc do sau mac dinh
+8. ML co hon mo hinh vat ly 2 bien khong,ML 0.846 vs Omori mo rong 0.840 (+0.005),ML KHONG dong gop dang ke ngoai viec chon bien

@@ -10,7 +10,7 @@
 | Bộ dữ liệu | ANSS ComCat qua FDSN Event Web Service | Global Significant Earthquake DB + Global Historical Tsunami DB |
 | Link gốc | https://earthquake.usgs.gov/fdsnws/event/1/ | https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/ |
 | Nội dung | tham số địa chấn từng trận | hậu quả: chết người, thiệt hại, sóng thần, runup |
-| Khối lượng | 40.930 trận (M≥4.0, 1990–2026) | 429 trận + 385 sóng thần + 12.939 runup |
+| Khối lượng | 40.931 trận (M≥4.0, 1990–2026) | 429 trận + 385 sóng thần + 12.939 runup |
 
 Tải trực tiếp từ trang cơ quan, **không** qua Kaggle hay bản đăng lại.
 
@@ -62,12 +62,13 @@ Chạy theo thứ tự **A → B → C → D**. B/C/D kiểm SHA-256 của file 
 
 **98% mức cải thiện đến từ việc thêm độ sâu, chỉ 2% từ loại mô hình.**
 
-### Kết quả RQ3 — 5/7 phép kiểm BỀN
+### Kết quả RQ3 — 6/8 phép kiểm BỀN
 
 - CI95 của AUC = [0,788 – 0,891]
 - Bỏ hẳn năm 2011 (Tohoku): AUC đổi **+0,001** → kết luận không phụ thuộc một trận
 - Chia theo vùng địa lý: AUC 0,821 (so với 0,845 chia theo thời gian)
 - Đổi tham số tách cụm: biến thiên chỉ 0,020
+- Bỏ 158 trận có độ sâu mặc định (10/33/35 km): AUC đổi **+0,009** → tín hiệu độ sâu không do giá trị điền sẵn
 
 **Hai điểm yếu, ghi rõ không giấu:**
 1. Đổi nhãn sang ngưỡng gây hại (M≥5.0/5.5) thì khoảng cách train−test nhảy 0,035 → 0,150
