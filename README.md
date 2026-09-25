@@ -82,8 +82,4 @@ Platt recalibration (2006-2015 window): Brier RF 0.161 → 0.155; extended Omori
 2. **The region includes Russia's Kuril Islands**, so it is called the "Japan-Kuril region".
 3. **The main contribution is a finding about the data** (depth controls aftershock productivity in a subduction zone), not a strong model.
 
-## Sentences NOT to write in the report
 
-- ❌ "The group's model is better than the Omori-Utsu law": the two do not use the same amount of input information.
-- ❌ "Events not in NCEI are events without consequences": NCEI only records significant events, so absence is missing data.
-- ❌ "The model is usable in practice": it has not been compared with ETAS, the model actually used in operations.
