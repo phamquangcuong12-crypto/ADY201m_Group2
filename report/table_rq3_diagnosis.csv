@@ -1,0 +1,8 @@
+phep_kiem,ket_qua,ket_luan
+1. Khoang tin cay bootstrap,"AUC 0.845, CI95 [0.788, 0.891]",BEN (can duoi CI > 0.70)
+2. Doi nhan sang muc gay hai,khoang cach 0.035 -> 0.150,YEU - ket qua sach chi ton tai o nguong catalog
+3. Doi nguong tran chinh,AUC 0.783 - 0.856,BEN
+4. Bo nam 2011 (Tohoku),AUC doi +0.001,BEN - khong phu thuoc Tohoku
+5. Chia theo vung dia ly,AUC trung binh 0.821 (so voi 0.845 chia theo thoi gian),BEN
+6. Doi tham so tach cum,bien thien AUC 0.020,BEN
+7. ML co hon mo hinh vat ly 2 bien khong,ML 0.846 vs Omori mo rong 0.840 (+0.005),ML KHONG dong gop dang ke ngoai viec chon bien

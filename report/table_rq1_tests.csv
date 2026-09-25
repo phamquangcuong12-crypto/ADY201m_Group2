@@ -1,0 +1,5 @@
+phep_kiem,thong_ke,p_value,ket_luan
+"Chi-square: nong (<70km) vs sau (>=70km), co/khong du chan",112.22,3.199140641245246e-26,khac biet co y nghia
+Kruskal-Wallis: so du chan giua cac tang do sau,217.67,5.9541145200575175e-46,khac biet co y nghia
+Spearman: magnitude vs so du chan,0.276,2.0451742047885648e-16,tuong quan duong
+Spearman: do sau vs so du chan,-0.492,2.6757527125335796e-53,tuong quan am

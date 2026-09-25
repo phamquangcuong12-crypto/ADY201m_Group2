@@ -1,0 +1,3 @@
+chuoi_khoa,co_khoa,ghep_duoc,tong
+earthquake -> tsunami (eq.tsunamiEventId),72,72,111
+tsunami -> runup (ru.tsunamiEventId),7749,6881,7749

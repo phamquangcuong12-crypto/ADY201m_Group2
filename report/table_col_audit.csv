@@ -1,0 +1,23 @@
+cot,pct_gia_tri_pho_bien,pct_thieu,quyet_dinh,ly_do
+time,0.0,0.0,GIU,dung lam dac trung hoac nhan
+latitude,0.02,0.0,GIU,dung lam dac trung hoac nhan
+longitude,0.03,0.0,GIU,dung lam dac trung hoac nhan
+depth,18.38,0.0,GIU,dung lam dac trung hoac nhan
+mag,13.11,0.0,GIU,dung lam dac trung hoac nhan
+magType,84.8,0.0,GIU,dung lam dac trung hoac nhan
+nst,2.14,42.09,LOAI,dau van tay co quan/thoi ky
+gap,1.75,24.25,LOAI,dau van tay co quan/thoi ky
+dmin,0.1,61.93,LOAI,thieu 62%; dau van tay co quan/thoi ky
+rms,3.65,1.05,LOAI,dau van tay co quan/thoi ky
+net,99.99,0.0,LOAI,100.0% mot gia tri; dau van tay co quan/thoi ky
+id,0.0,0.0,LOAI,dau van tay co quan/thoi ky
+updated,0.07,0.0,LOAI,dau van tay co quan/thoi ky
+place,8.6,0.0,LOAI,dau van tay co quan/thoi ky
+type,99.98,0.0,LOAI,100.0% mot gia tri; dau van tay co quan/thoi ky
+horizontalError,1.37,65.13,LOAI,thieu 65%; dau van tay co quan/thoi ky
+depthError,6.1,33.41,LOAI,dau van tay co quan/thoi ky
+magError,1.34,62.35,LOAI,thieu 62%; dau van tay co quan/thoi ky
+magNst,6.27,12.21,LOAI,dau van tay co quan/thoi ky
+status,100.0,0.0,LOAI,100.0% mot gia tri; dau van tay co quan/thoi ky
+locationSource,98.94,0.0,LOAI,dau van tay co quan/thoi ky
+magSource,90.52,0.0,LOAI,dau van tay co quan/thoi ky

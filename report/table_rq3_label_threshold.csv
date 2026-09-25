@@ -1,0 +1,4 @@
+nguong_nhan,nguong_M,pct_duong,so_duong,AUC_test,AUC_train,khoang_cach
+nguong CATALOG (M>=Mc),4.6,34.5,294,0.8454,0.8809,0.0355
+nguong GAY HAI nhe (M>=5.0),5.0,22.4,191,0.7653,0.8949,0.1297
+nguong GAY HAI ro (M>=5.5),5.5,10.4,89,0.7794,0.9289,0.1496
