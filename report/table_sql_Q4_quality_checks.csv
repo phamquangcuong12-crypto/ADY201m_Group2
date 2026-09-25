@@ -1,0 +1,6 @@
+check_name,n_bad_rows
+duplicate id,0
+coordinates outside bounding box,0
+negative depth,0
+"magnitude outside [Mc,10]",0
+missing time,0

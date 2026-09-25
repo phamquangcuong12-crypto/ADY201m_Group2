@@ -1,4 +1,4 @@
-ngay,dia_diem,mag,do_sau_km,thang_do
+date,location,mag,depth_km,mag_scale
 2011-03-11,"2011 Great Tohoku Earthquake, Japan",9.1,29.0,mww
 1994-10-04,"48 km E of Shikotan, Russia",8.3,14.0,mw
 2003-09-26,2003 Tokachi-Oki Earthquake,8.16,27.0,mww

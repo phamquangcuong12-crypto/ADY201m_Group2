@@ -1,4 +1,4 @@
-nguong_tran_chinh,so_chuoi,pct_duong,moc_naive_acc,n_train,n_test,AUC_test,khoang_cach
+mainshock_threshold,n_sequences,pct_positive,naive_acc,n_train,n_test,AUC_test,gap
 M>=5.0,2285,22.1,0.779,1612,673,0.783,0.0844
 M>=5.5,853,34.5,0.655,627,226,0.8454,0.0355
 M>=6.0,322,49.7,0.503,249,73,0.8563,0.0633

@@ -1,4 +1,4 @@
-ngay,dia_diem,mag,gio_tu_tran_truoc,gio_den_tran_sau,mag_tran_truoc
+date,location,mag,hours_since_prev,hours_to_next,mag_prev_event
 2011-03-11,"47 km E of ?arai, Japan",7.9,0.0,0.05,6.3
 1993-01-15,"52 km NE of Otofuke, Japan",7.6,0.0,99.55,6.1
 2004-09-05,"119 km ESE of Shing?, Japan",6.51,0.0,32.53,7.4

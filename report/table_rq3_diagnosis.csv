@@ -1,9 +1,9 @@
-phep_kiem,ket_qua,ket_luan
-1. Khoang tin cay bootstrap,"AUC 0.845, CI95 [0.788, 0.891]",BEN (can duoi CI > 0.70)
-2. Doi nhan sang muc gay hai,khoang cach 0.035 -> 0.150,YEU - ket qua sach chi ton tai o nguong catalog
-3. Doi nguong tran chinh,AUC 0.783 - 0.856,BEN
-4. Bo nam 2011 (Tohoku),AUC doi +0.001,BEN - khong phu thuoc Tohoku
-5. Chia theo vung dia ly,AUC trung binh 0.821 (so voi 0.845 chia theo thoi gian),BEN
-6. Doi tham so tach cum,bien thien AUC 0.020,BEN
-7. Bo do sau mac dinh (10/33/35 km),AUC doi +0.009 (695 chuoi),BEN - khong phu thuoc do sau mac dinh
-8. ML co hon mo hinh vat ly 2 bien khong,ML 0.846 vs Omori mo rong 0.840 (+0.005),ML KHONG dong gop dang ke ngoai viec chon bien
+check,result,verdict
+1. Bootstrap confidence interval,"AUC 0.845, CI95 [0.788, 0.891]",ROBUST (CI lower bound > 0.70)
+2. Label moved to a damaging level,gap 0.035 -> 0.150,WEAK - the clean result only exists at the catalog threshold
+3. Mainshock threshold changed,AUC 0.783 - 0.856,ROBUST
+4. 2011 dropped (Tohoku),AUC changes +0.001,ROBUST - does not depend on Tohoku
+5. Split by geographic region,mean AUC 0.821 (vs 0.845 with a time split),ROBUST
+6. Declustering parameters changed,AUC range 0.020,ROBUST
+7. Default depths dropped (10/33/35 km),AUC changes +0.009 (695 sequences),ROBUST - does not depend on default depths
+8. Does ML beat the 2-variable physics model,ML 0.846 vs extended Omori 0.840 (+0.005),ML adds NOTHING significant beyond feature choice

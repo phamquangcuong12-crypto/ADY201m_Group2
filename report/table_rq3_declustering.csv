@@ -1,4 +1,4 @@
-phuong_phap,pct_la_du_chan,so_chuoi,pct_duong,AUC_test,khoang_cach
-cua so x0.5 (chat),43.6,1112,39.0,0.8366,0.0234
-Gardner-Knopoff goc,62.3,853,34.5,0.8454,0.0355
-cua so x2.0 (rong),84.4,485,33.8,0.8253,0.083
+method,pct_aftershocks,n_sequences,pct_positive,AUC_test,gap
+window x0.5 (tight),43.6,1112,39.0,0.8366,0.0234
+original Gardner-Knopoff,62.3,853,34.5,0.8454,0.0355
+window x2.0 (wide),84.4,485,33.8,0.8253,0.083

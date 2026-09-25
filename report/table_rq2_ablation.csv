@@ -1,5 +1,5 @@
-bo_dac_trung,so_bien,do_sau_cay,AUC_train,AUC_test,khoang_cach
-chi magnitude,1,3,0.6811,0.587,0.0941
-magnitude + do sau,2,3,0.9063,0.8347,0.0715
-+ vi tri (4 dac trung),4,3,0.9719,0.8073,0.1646
-"+ vi tri, cay sau hon",4,8,0.9999,0.7862,0.2138
+feature_set,n_features,tree_depth,AUC_train,AUC_test,gap
+magnitude only,1,3,0.6811,0.587,0.0941
+magnitude + depth,2,3,0.9063,0.8347,0.0715
++ location (4 features),4,3,0.9719,0.8073,0.1646
+"+ location, deeper trees",4,8,0.9999,0.7862,0.2138

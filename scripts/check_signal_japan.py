@@ -38,47 +38,47 @@ for k in range(len(ms)):
     cnt[k]=int(((hav(ms.loc[k,"latitude"],ms.loc[k,"longitude"],la[idx],lo[idx])<=100)&(mg[idx]<ms.loc[k,"mag"])).sum())
 ms["n_after24h"]=cnt; ms["any_after"]=(cnt>0).astype(int)
 
-print("="*64); print(f"TIN HIEU HOC DUOC?  (mainshock M>={MS}, n={len(ms)})"); print("="*64)
+print("="*64); print(f"IS THERE A LEARNABLE SIGNAL?  (mainshock M>={MS}, n={len(ms)})"); print("="*64)
 
-print("\n-- Do sau vs nang suat du chan (gia thuyet vat ly chinh) --")
+print("\n-- Depth vs aftershock productivity (main physical hypothesis) --")
 ms["depth_bin"]=pd.cut(ms["depth"],[0,30,70,150,300,700],
-    labels=["0-30 (vo)","30-70","70-150","150-300","300-700 (sau)"])
+    labels=["0-30 (crustal)","30-70","70-150","150-300","300-700 (deep)"])
 g=ms.groupby("depth_bin",observed=True).agg(n=("n_after24h","size"),
-    ty_le_co_du_chan=("any_after","mean"),trung_binh=("n_after24h","mean"),
-    trung_vi=("n_after24h","median"))
-g["ty_le_co_du_chan"]=(g["ty_le_co_du_chan"]*100).round(1)
+    pct_with_aftershock=("any_after","mean"),mean=("n_after24h","mean"),
+    median=("n_after24h","median"))
+g["pct_with_aftershock"]=(g["pct_with_aftershock"]*100).round(1)
 print(g.round(2).to_string())
 
-print("\n-- Magnitude vs nang suat --")
+print("\n-- Magnitude vs productivity --")
 ms["mag_bin"]=pd.cut(ms["mag"],[5.5,6.0,6.5,7.0,9.5],labels=["5.5-6.0","6.0-6.5","6.5-7.0","7.0+"],right=False)
 g2=ms.groupby("mag_bin",observed=True).agg(n=("n_after24h","size"),
-    ty_le_co_du_chan=("any_after","mean"),trung_binh=("n_after24h","mean"))
-g2["ty_le_co_du_chan"]=(g2["ty_le_co_du_chan"]*100).round(1)
+    pct_with_aftershock=("any_after","mean"),mean=("n_after24h","mean"))
+g2["pct_with_aftershock"]=(g2["pct_with_aftershock"]*100).round(1)
 print(g2.round(2).to_string())
 
-print("\n-- Kiem dinh: nong (<70km) vs sau (>=70km) --")
+print("\n-- Test: shallow (<70km) vs deep (>=70km) --")
 from scipy import stats
 sh=ms[ms["depth"]<70]["any_after"]; de=ms[ms["depth"]>=70]["any_after"]
-print(f"  nong: {sh.mean()*100:.1f}% co du chan (n={len(sh)})")
-print(f"  sau : {de.mean()*100:.1f}% co du chan (n={len(de)})")
+print(f"  shallow: {sh.mean()*100:.1f}% with aftershock (n={len(sh)})")
+print(f"  deep   : {de.mean()*100:.1f}% with aftershock (n={len(de)})")
 ct=np.array([[sh.sum(),len(sh)-sh.sum()],[de.sum(),len(de)-de.sum()]])
 chi2,p,_,_=stats.chi2_contingency(ct)
-print(f"  chi-square p = {p:.3e}  {'<- CO tin hieu' if p<0.05 else '<- KHONG'}")
+print(f"  chi-square p = {p:.3e}  {'<- signal PRESENT' if p<0.05 else '<- NO signal'}")
 
-print("\n-- Tohoku 2011 co lan at khong? --")
+print("\n-- Does Tohoku 2011 dominate? --")
 ms["year"]=ms["time"].dt.year
 top=ms.nlargest(8,"n_after24h")[["time","mag","depth","n_after24h","place"]]
 top["time"]=top["time"].dt.strftime("%Y-%m-%d %H:%M")
 print(top.to_string(index=False))
 y2011=ms[ms["year"]==2011]
-print(f"\n  chuoi nam 2011 : {len(y2011)}/{len(ms)} = {len(y2011)/len(ms)*100:.1f}% so chuoi")
-print(f"  du chan nam 2011: {y2011['n_after24h'].sum():,}/{ms['n_after24h'].sum():,} = "
-      f"{y2011['n_after24h'].sum()/ms['n_after24h'].sum()*100:.1f}% tong du chan")
+print(f"\n  2011 sequences  : {len(y2011)}/{len(ms)} = {len(y2011)/len(ms)*100:.1f}% of sequences")
+print(f"  2011 aftershocks: {y2011['n_after24h'].sum():,}/{ms['n_after24h'].sum():,} = "
+      f"{y2011['n_after24h'].sum()/ms['n_after24h'].sum()*100:.1f}% of all aftershocks")
 ex=ms[ms["year"]!=2011]
-print(f"  BO 2011 di: n={len(ex)}, ty le co du chan={ex['any_after'].mean()*100:.1f}%, "
-      f"trung binh={ex['n_after24h'].mean():.2f}")
+print(f"  WITHOUT 2011: n={len(ex)}, share with aftershock={ex['any_after'].mean()*100:.1f}%, "
+      f"mean={ex['n_after24h'].mean():.2f}")
 
-print("\n-- BASELINE cho bai phan loai nhi phan 'co >=1 du chan trong 24h' --")
+print("\n-- BASELINE for the binary task 'at least 1 aftershock within 24h' --")
 for th in [5.0,5.5,6.0]:
     s=main[main["mag"]>=th].reset_index(drop=True)
     c=np.zeros(len(s),np.int64)
@@ -90,6 +90,6 @@ for th in [5.0,5.5,6.0]:
             c[k]=int(((hav(s.loc[k,"latitude"],s.loc[k,"longitude"],la[idx],lo[idx])<=100)&(mg[idx]<s.loc[k,"mag"])).sum())
     y=(c>0).astype(int)
     maj=max(y.mean(),1-y.mean())
-    print(f"  M>={th}: n={len(s):>5,}  duong={y.mean()*100:>5.1f}%  baseline majority={maj*100:>5.1f}%")
+    print(f"  M>={th}: n={len(s):>5,}  positive={y.mean()*100:>5.1f}%  majority baseline={maj*100:>5.1f}%")
 ms.to_csv("feas_mainshocks_M55.csv",index=False)
-print("\nda luu feas_mainshocks_M55.csv")
+print("\nsaved feas_mainshocks_M55.csv")

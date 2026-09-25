@@ -1,4 +1,4 @@
-kich_ban,so_chuoi,pct_duong,n_train,n_test,AUC_test,AUC_train,khoang_cach
-giu nguyen (co 2011),853,34.5,627,226,0.8454,0.8809,0.0355
-BO HAN nam 2011,798,31.7,572,226,0.8444,0.8857,0.0413
-bo 2011-2012,788,31.9,562,226,0.8489,0.8884,0.0395
+scenario,n_sequences,pct_positive,n_train,n_test,AUC_test,AUC_train,gap
+as is (with 2011),853,34.5,627,226,0.8454,0.8809,0.0355
+DROP 2011 entirely,798,31.7,572,226,0.8444,0.8857,0.0413
+drop 2011-2012,788,31.9,562,226,0.8489,0.8884,0.0395

@@ -1,89 +1,89 @@
-# ADY202m — Nhóm 2 — Dự báo dư chấn ngắn hạn vùng Nhật Bản – Kuril
+# ADY202m, Group 2: Short-term aftershock forecasting for the Japan-Kuril region
 
-Đề tài thay cho đề tài UAV cũ (đổi có sự đồng ý của giảng viên do dataset cũ không phù hợp).
+This topic replaces the earlier UAV topic (changed with the instructor's approval because the old dataset was not suitable).
 
-## Hai nguồn dữ liệu, cả hai đều là cơ quan liên bang Hoa Kỳ
+## Two data sources, both U.S. federal agencies
 
-| | Nguồn 1 | Nguồn 2 |
+| | Source 1 | Source 2 |
 |---|---|---|
-| Cơ quan | **USGS** (U.S. Geological Survey, Bộ Nội vụ) | **NOAA/NCEI** (Bộ Thương mại) |
-| Bộ dữ liệu | ANSS ComCat qua FDSN Event Web Service | Global Significant Earthquake DB + Global Historical Tsunami DB |
-| Link gốc | https://earthquake.usgs.gov/fdsnws/event/1/ | https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/ |
-| Nội dung | tham số địa chấn từng trận | hậu quả: chết người, thiệt hại, sóng thần, runup |
-| Khối lượng | 40.931 trận (M≥4.0, 1990–2026) | 429 trận + 385 sóng thần + 12.939 runup |
+| Agency | **USGS** (U.S. Geological Survey, Department of the Interior) | **NOAA/NCEI** (Department of Commerce) |
+| Dataset | ANSS ComCat via the FDSN Event Web Service | Global Significant Earthquake DB + Global Historical Tsunami DB |
+| Original link | https://earthquake.usgs.gov/fdsnws/event/1/ | https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/ |
+| Content | seismic parameters of each event | consequences: deaths, damage, tsunamis, runup |
+| Volume | 40,931 events (M≥4.0, 1990-2026) | 429 earthquakes + 385 tsunamis + 12,939 runups |
 
-Tải trực tiếp từ trang cơ quan, **không** qua Kaggle hay bản đăng lại.
+Downloaded directly from the agency sites, **not** through Kaggle or a re-published copy.
 
 ```
 python scripts/fetch_japan_quake_data.py
 ```
 
-## Bốn câu hỏi nghiên cứu
+## Four research questions
 
-| RQ | Nội dung | Notebook |
+| RQ | Question | Notebook |
 |---|---|---|
-| RQ1 | Động đất vùng Nhật–Kuril phân bố thế nào? Độ sâu có liên quan tới năng suất dư chấn? | A |
-| RQ2 | Dự báo có dư chấn trong 24h có thắng mốc naive / vật lý / Omori–Utsu? | B |
-| RQ3 | Kết quả có bền khi đổi ngưỡng, đổi cách chia, bỏ Tohoku, đổi cách tách cụm? | C |
-| RQ4 | Chuỗi nào để lại hậu quả thật? Ghép nguồn NOAA/NCEI ba tầng. | D |
+| RQ1 | How are Japan-Kuril earthquakes distributed? Is depth related to aftershock productivity? | A |
+| RQ2 | Does a forecast of aftershocks within 24h beat the naive / physics / Omori-Utsu baselines? | B |
+| RQ3 | Do the results hold when changing the threshold, the split, dropping Tohoku, or changing the declustering? | C |
+| RQ4 | Which sequences leave real consequences? Joins the three-tier NOAA/NCEI source. | D |
 
-## Cấu trúc
+## Structure
 
 ```
-Notebook_A_Nhom2_Japan_Aftershock.ipynb   Bước 0–3 + hình RQ1
-Notebook_B_Nhom2_Japan_Aftershock.ipynb   Bước 4 + 6a, RQ2
-Notebook_C_Nhom2_Japan_Aftershock.ipynb   Bước 6b + 6c, RQ3
-Notebook_D_Nhom2_Japan_Aftershock.ipynb   Bước 7, RQ4 (nguồn thứ hai)
-scripts/fetch_japan_quake_data.py         tải dữ liệu từ 2 API
-data/raw_japan/                           CSV gốc
+Notebook_A_Nhom2_Japan_Aftershock.ipynb   Steps 0-3 + RQ1 figures
+Notebook_B_Nhom2_Japan_Aftershock.ipynb   Steps 4 + 6a, RQ2
+Notebook_C_Nhom2_Japan_Aftershock.ipynb   Steps 6b + 6c, RQ3
+Notebook_D_Nhom2_Japan_Aftershock.ipynb   Step 7, RQ4 (second source)
+scripts/fetch_japan_quake_data.py         downloads the data from the 2 APIs
+data/raw_japan/                           original CSVs
 data/processed/                           mainshocks.parquet + manifest.json
 report/                                   table_*.csv + fig_*.png
-sql/queries.sql, sql/queries_D.sql        13 truy vấn, notebook tự ghi ra
+sql/queries.sql, sql/queries_D.sql        13 queries, written by the notebooks
 ```
 
-Chạy theo thứ tự **A → B → C → D**. B/C/D kiểm SHA-256 của file A bàn giao nên không chạy nhầm bản cũ được.
+Run in order **A → B → C → D**. B/C/D check the SHA-256 of the file handed off by A, so an outdated version cannot be run by mistake.
 
-## Số chính (chạy ngày 25/09/2026)
+## Key numbers (run on 2026-09-25)
 
-- Catalog sạch: 16.687 trận từ `Mc = 4.6`; hệ số Gutenberg–Richter `b = 1.02`
-- Gardner–Knopoff tách được 62,3% là dư chấn → **853 chuỗi trận chính M ≥ 5.5**
-- Nhãn: 34,5% chuỗi có ≥1 dư chấn trong 24h / 100 km
-- Ghép hai nguồn: **97,3%** (108/111), lệch thời gian trung vị **0 giây** (tối đa 2 giây)
-- Chuỗi ghép ba tầng NCEI: **6.871 dòng**, 7.601 điểm runup, cao nhất **55,88 m**
+- Clean catalog: 16,687 events from `Mc = 4.6`; Gutenberg-Richter `b = 1.02`
+- Gardner-Knopoff flags 62.3% as aftershocks → **853 mainshock sequences M ≥ 5.5**
+- Label: 34.5% of sequences have ≥1 aftershock within 24h / 100 km
+- Source match: **97.3%** (108/111), median time offset **0 s** (max 2 s)
+- NCEI three-tier join chain: **6,871 rows**, 7,601 runup points, highest **55.88 m**
 
-### Kết quả RQ2
+### RQ2 results
 
-| | AUC test |
+| | Test AUC |
 |---|---|
-| Naive (lớp phổ biến) | 0,500 |
-| Omori–Utsu cổ điển (chỉ magnitude) | 0,597 |
-| **Omori mở rộng (magnitude + độ sâu), Poisson GLM 2 biến** | **0,840** |
-| Random Forest (magnitude + độ sâu) | **0,846** — khoảng cách train−test chỉ **0,035** |
+| Naive (majority class) | 0.500 |
+| Classic Omori-Utsu (magnitude only) | 0.597 |
+| **Extended Omori (magnitude + depth), 2-variable Poisson GLM** | **0.840** |
+| Random Forest (magnitude + depth) | **0.846**, with a train-test gap of only **0.035** |
 
-**98% mức cải thiện đến từ việc thêm độ sâu, chỉ 2% từ loại mô hình.**
+**98% of the improvement comes from adding depth, only 2% from the model type.**
 
-Hiệu chỉnh Platt (cửa sổ 2006–2015): Brier RF 0,161 → 0,155; Omori mở rộng 0,380 → 0,171. AUC không đổi. So Brier giữa ML và Omori chỉ công bằng sau khi cả hai đã hiệu chỉnh.
+Platt recalibration (2006-2015 window): Brier RF 0.161 → 0.155; extended Omori 0.380 → 0.171. AUC unchanged. Comparing Brier between ML and Omori is only fair after both are calibrated.
 
-### Kết quả RQ3 — 6/8 phép kiểm BỀN
+### RQ3 results: 6/8 checks ROBUST
 
-- CI95 của AUC = [0,788 – 0,891]
-- Bỏ hẳn năm 2011 (Tohoku): AUC đổi **+0,001** → kết luận không phụ thuộc một trận
-- Chia theo vùng địa lý: AUC 0,821 (so với 0,845 chia theo thời gian)
-- Đổi tham số tách cụm: biến thiên chỉ 0,020
-- Bỏ 158 trận có độ sâu mặc định (10/33/35 km): AUC đổi **+0,009** → tín hiệu độ sâu không do giá trị điền sẵn
+- AUC CI95 = [0.788, 0.891]
+- Dropping 2011 (Tohoku) entirely: AUC changes by **+0.001** → the conclusion does not depend on one earthquake
+- Split by geographic region: AUC 0.821 (vs 0.845 with a time split)
+- Changing the declustering parameters: AUC range only 0.020
+- Dropping the 158 events with a default depth (10/33/35 km): AUC changes by **+0.009** → the depth signal does not come from filled-in values
 
-**Hai điểm yếu, ghi rõ không giấu:**
-1. Đổi nhãn sang ngưỡng gây hại (M≥5.0/5.5) thì khoảng cách train−test nhảy 0,035 → 0,150
-2. ML **không** đóng góp đáng kể ngoài việc chọn đúng biến (p = 0,40 so với Omori mở rộng)
+**Two weak points, stated openly:**
+1. Moving the label to a damaging threshold (M≥5.0/5.5) makes the train-test gap jump from 0.035 to 0.150
+2. ML does **not** add anything significant beyond choosing the right variable (p = 0.40 against extended Omori)
 
-## Ba giới hạn phải nêu trong Discussion
+## Three limitations to state in the Discussion
 
-1. **USGS không phải cơ quan địa chấn chính của Nhật** — JMA mới là, và catalog JMA đầy đủ tới ~M2–3 còn USGS chỉ tới M4.6. Bài này là **demo phương pháp trên nguồn liên bang Hoa Kỳ**, không phải công cụ dùng được cho Nhật.
-2. **Vùng gồm cả quần đảo Kuril của Nga** nên gọi là "vùng Nhật–Kuril".
-3. **Đóng góp chính là một phát hiện về dữ liệu** (độ sâu chi phối năng suất dư chấn ở đới hút chìm), không phải một mô hình mạnh.
+1. **USGS is not Japan's primary seismic agency.** JMA is, and the JMA catalog is complete down to ~M2-3 while USGS is only complete from M4.6. This work is a **method demo on a U.S. federal source**, not a tool usable for Japan.
+2. **The region includes Russia's Kuril Islands**, so it is called the "Japan-Kuril region".
+3. **The main contribution is a finding about the data** (depth controls aftershock productivity in a subduction zone), not a strong model.
 
-## Câu KHÔNG được viết trong report
+## Sentences NOT to write in the report
 
-- ❌ "Mô hình của nhóm tốt hơn định luật Omori–Utsu" — hai bên không dùng cùng lượng thông tin đầu vào.
-- ❌ "Trận không có trong NCEI là trận không gây hậu quả" — NCEI chỉ ghi trận đáng kể; vắng mặt là thiếu dữ liệu.
-- ❌ "Mô hình dùng được thực tế" — chưa so với ETAS, là mô hình thực sự dùng trong vận hành.
+- ❌ "The group's model is better than the Omori-Utsu law": the two do not use the same amount of input information.
+- ❌ "Events not in NCEI are events without consequences": NCEI only records significant events, so absence is missing data.
+- ❌ "The model is usable in practice": it has not been compared with ETAS, the model actually used in operations.

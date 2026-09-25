@@ -1,5 +1,5 @@
-phep_kiem,thong_ke,p_value,ket_luan
-"Chi-square: nong (<70km) vs sau (>=70km), co/khong du chan",112.22,3.199140641245246e-26,khac biet co y nghia
-Kruskal-Wallis: so du chan giua cac tang do sau,217.67,5.954114520057517e-46,khac biet co y nghia
-Spearman: magnitude vs so du chan,0.276,2.0451742047885917e-16,tuong quan duong
-Spearman: do sau vs so du chan,-0.492,2.6757527125335735e-53,tuong quan am
+test,statistic,p_value,conclusion
+"Chi-square: shallow (<70km) vs deep (>=70km), with/without aftershock",112.22,3.199140641245246e-26,significant difference
+Kruskal-Wallis: aftershock counts across depth bands,217.67,5.954114520057517e-46,significant difference
+Spearman: magnitude vs aftershock count,0.276,2.0451742047885917e-16,positive correlation
+Spearman: depth vs aftershock count,-0.492,2.6757527125335735e-53,negative correlation

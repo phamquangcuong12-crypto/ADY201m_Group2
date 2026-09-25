@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Tai du lieu dong dat Nhat Ban tu 2 nguon chinh phu My.
-  Nguon 1: USGS ANSS ComCat  (FDSN Event Web Service)
-  Nguon 2: NOAA/NCEI HazEL   (Significant Earthquake DB + Tsunami DB)
+Download Japan earthquake data from 2 U.S. government sources.
+  Source 1: USGS ANSS ComCat  (FDSN Event Web Service)
+  Source 2: NOAA/NCEI HazEL   (Significant Earthquake DB + Tsunami DB)
 
-Chay:  python scripts/fetch_japan_quake_data.py
-Ket qua: data/raw_japan/*.csv
+Run:    python scripts/fetch_japan_quake_data.py
+Output: data/raw_japan/*.csv
 """
 import json, sys, time
 from pathlib import Path
@@ -13,13 +13,13 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-# ----- Hop bao Nhat Ban -----
+# ----- Japan bounding box -----
 BOX = {
     "minlatitude": 24, "maxlatitude": 46,
     "minlongitude": 122, "maxlongitude": 150,
 }
-YEAR_FROM, YEAR_TO = 1990, 2027     # endtime cua 2026 = 2027-01-01
-MIN_MAG = 4.0                       # lay thap hon 4.5 de con du chan; phan tich se chon Mc sau
+YEAR_FROM, YEAR_TO = 1990, 2027     # endtime for 2026 = 2027-01-01
+MIN_MAG = 4.0                       # below 4.5 to keep aftershocks; the analysis picks Mc later
 
 OUT = Path("data/raw_japan")
 OUT.mkdir(parents=True, exist_ok=True)
@@ -34,18 +34,18 @@ def get(url, params=None, tries=4, timeout=120):
             r = S.get(url, params=params, timeout=timeout)
             if r.status_code == 200:
                 return r
-            print(f"    HTTP {r.status_code} (lan {k+1})")
+            print(f"    HTTP {r.status_code} (attempt {k+1})")
         except Exception as e:
-            print(f"    loi {type(e).__name__}: {e} (lan {k+1})")
+            print(f"    error {type(e).__name__}: {e} (attempt {k+1})")
         time.sleep(3 * (k + 1))
     return None
 
 
 # =========================================================
-# NGUON 1 - USGS: chia chunk theo nam (gioi han 20.000/request)
+# SOURCE 1 - USGS: chunk by year (limit 20,000 per request)
 # =========================================================
 print("=" * 62)
-print("NGUON 1 - USGS ANSS ComCat (FDSN Event Web Service)")
+print("SOURCE 1 - USGS ANSS ComCat (FDSN Event Web Service)")
 print("=" * 62)
 
 USGS = "https://earthquake.usgs.gov/fdsnws/event/1/query"
@@ -57,40 +57,40 @@ for year in range(YEAR_FROM, YEAR_TO):
              starttime=f"{year}-01-01", endtime=f"{year+1}-01-01")
     r = get(USGS, p)
     if r is None or not r.text.strip():
-        print(f"  {year}: THAT BAI")
+        print(f"  {year}: FAILED")
         failed.append(year)
         continue
     fp = OUT / f"usgs_{year}.csv"
     fp.write_text(r.text, encoding="utf-8")
     df = pd.read_csv(fp)
     frames.append(df)
-    print(f"  {year}: {len(df):>6,} su kien")
+    print(f"  {year}: {len(df):>6,} events")
     time.sleep(0.6)
 
 if frames:
     usgs = pd.concat(frames, ignore_index=True)
     usgs = usgs.drop_duplicates(subset="id").sort_values("time")
     usgs.to_csv(OUT / "usgs_japan_1990_2026.csv", index=False)
-    print(f"\n  => GOP: {len(usgs):,} dong x {usgs.shape[1]} cot")
-    print(f"     luu: {OUT/'usgs_japan_1990_2026.csv'}")
-    for f in OUT.glob("usgs_1*.csv"):
+    print(f"\n  => MERGED: {len(usgs):,} rows x {usgs.shape[1]} columns")
+    print(f"     saved: {OUT/'usgs_japan_1990_2026.csv'}")
+    for f in OUT.glob("usgs_[0-9]*.csv"):    # per-year chunks, now merged
         f.unlink()
 else:
-    print("  => KHONG TAI DUOC GI tu USGS")
+    print("  => NOTHING DOWNLOADED from USGS")
 if failed:
-    print(f"  !! nam that bai, can chay lai: {failed}")
+    print(f"  !! failed years, run again: {failed}")
 
 
 # =========================================================
-# NGUON 2 - NOAA/NCEI HazEL
+# SOURCE 2 - NOAA/NCEI HazEL
 # =========================================================
 print()
 print("=" * 62)
-print("NGUON 2 - NOAA/NCEI HazEL")
+print("SOURCE 2 - NOAA/NCEI HazEL")
 print("=" * 62)
 
 BASE = "https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1"
-# nhieu duong dan ung vien vi t chua xac minh duoc het (endpoint tsunami bi rate-limit)
+# several candidate paths because not all could be verified (the tsunami endpoint is rate-limited)
 TARGETS = {
     "ncei_earthquakes": [f"{BASE}/earthquakes?country=JAPAN"],
     "ncei_tsunami_events": [
@@ -111,19 +111,19 @@ for name, urls in TARGETS.items():
     for url in urls:
         r = get(url, tries=2, timeout=90)
         if r is None:
-            print(f"    khong duoc: {url}")
+            print(f"    failed: {url}")
             continue
         try:
             js = r.json()
         except Exception:
-            print(f"    khong phai JSON: {url}")
+            print(f"    not JSON: {url}")
             continue
         items = js.get("items", js if isinstance(js, list) else None)
         if not items:
-            print(f"    rong: {url}")
+            print(f"    empty: {url}")
             continue
         df = pd.json_normalize(items)
-        # phan trang neu co
+        # follow pagination if present
         total_pages = js.get("totalPages", 1) if isinstance(js, dict) else 1
         if total_pages and total_pages > 1:
             for pg in range(2, int(total_pages) + 1):
@@ -139,24 +139,24 @@ for name, urls in TARGETS.items():
         df.to_csv(OUT / f"{name}.csv", index=False)
         (OUT / f"{name}_raw.json").write_text(
             json.dumps(js, ensure_ascii=False), encoding="utf-8")
-        print(f"    OK  {len(df):,} dong x {df.shape[1]} cot  <- {url}")
-        print(f"        luu: {OUT / (name + '.csv')}")
+        print(f"    OK  {len(df):,} rows x {df.shape[1]} columns  <- {url}")
+        print(f"        saved: {OUT / (name + '.csv')}")
         got = True
         break
     if not got:
-        print(f"    !! THAT BAI het duong dan cho {name}")
+        print(f"    !! all paths FAILED for {name}")
     time.sleep(1.5)
 
 
 # =========================================================
 print()
 print("=" * 62)
-print("TOM TAT FILE DA TAI")
+print("SUMMARY OF DOWNLOADED FILES")
 print("=" * 62)
 for f in sorted(OUT.glob("*.csv")):
     try:
         n = sum(1 for _ in f.open(encoding="utf-8", errors="ignore")) - 1
     except Exception:
         n = -1
-    print(f"  {f.name:<40} {n:>8,} dong   {f.stat().st_size/1e6:>7.2f} MB")
-print("\nXONG. Bao lai cho Claude de chay checklist kha thi.")
+    print(f"  {f.name:<40} {n:>8,} rows   {f.stat().st_size/1e6:>7.2f} MB")
+print("\nDONE.")

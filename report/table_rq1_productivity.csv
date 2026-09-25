@@ -1,4 +1,4 @@
-depth_bin,so_chuoi,pct_co_du_chan,du_chan_tb,du_chan_trung_vi
+depth_bin,n_sequences,pct_with_aftershock,mean_aftershocks,median_aftershocks
 0-30,317,63.1,7.65,1.0
 30-70,313,26.5,4.0,0.0
 70-150,78,5.1,0.06,0.0

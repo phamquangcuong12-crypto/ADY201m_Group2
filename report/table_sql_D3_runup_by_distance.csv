@@ -1,0 +1,5 @@
+distance_band,n_measurement_points,mean_runup_m,max_runup_m,median_runup_m
+1. under 100 km,2033,8.11,38.56,5.99
+2. 100-300 km,3699,8.39,55.88,6.45
+3. 300-1000 km,980,1.8,10.1,1.5
+4. over 1000 km,889,0.24,2.0,0.15

@@ -1,4 +1,4 @@
-bien,co_hau_qua_trung_vi,khong_ghi_nhan_trung_vi,U,p_value,ket_luan
-Magnitude,6.7,5.8,52297.0,3.699888014476716e-30,khac biet co y nghia
-Do sau (km),14.2,36.15,14502.0,5.818571887765458e-13,khac biet co y nghia
-So du chan trong 24h,4.0,0.0,48842.0,4.01850170651383e-30,khac biet co y nghia
+variable,median_with_consequences,median_not_recorded,U,p_value,conclusion
+Magnitude,6.7,5.8,52297.0,3.699888014476716e-30,significant difference
+Depth (km),14.2,36.15,14502.0,5.818571887765458e-13,significant difference
+Aftershocks within 24h,4.0,0.0,48842.0,4.01850170651383e-30,significant difference
