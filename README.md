@@ -62,6 +62,8 @@ Chạy theo thứ tự **A → B → C → D**. B/C/D kiểm SHA-256 của file 
 
 **98% mức cải thiện đến từ việc thêm độ sâu, chỉ 2% từ loại mô hình.**
 
+Hiệu chỉnh Platt (cửa sổ 2006–2015): Brier RF 0,161 → 0,155; Omori mở rộng 0,380 → 0,171. AUC không đổi. So Brier giữa ML và Omori chỉ công bằng sau khi cả hai đã hiệu chỉnh.
+
 ### Kết quả RQ3 — 6/8 phép kiểm BỀN
 
 - CI95 của AUC = [0,788 – 0,891]
